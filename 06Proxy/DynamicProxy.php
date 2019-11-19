@@ -21,6 +21,18 @@ class RealSubject implements ISubject {
     }
 }
 
+class FaultSubject implements ISubject {
+    public function dosomething($string)
+    {
+        var_dump("this is fault subject doing ".$string);
+    }
+
+    public function dosomeelse($string)
+    {
+        var_dump("fault some else doing ".$string);
+    }
+}
+
 interface IAdvice {
     public function exec();
 }
@@ -61,10 +73,18 @@ class SubjectDynamicProxy {
 class Client {
     public function test()
     {
+        //动态:方法的动态
         $RealSubject = new RealSubject();
         $proxy = SubjectDynamicProxy::newProxyInstance($RealSubject);
         $proxy->dosomething("wking");
         $proxy->dosomeelse("ggg");
+
+        //动态:代理对象的动态,在运行时指定,实现阶段不进行指定
+        $FaultSubject = new FaultSubject();
+        $proxy2 = SubjectDynamicProxy::newProxyInstance($FaultSubject);
+        $proxy2->dosomething("yyyy");
+        $proxy2->dosomeelse("uuuu");
+
     }
 }
 
