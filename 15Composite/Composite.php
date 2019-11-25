@@ -37,13 +37,13 @@ class Composite extends Component {
 
     public function add(Component $component)
     {
-        $this->componentList[md5($component)."".rand(1,10)] = $component;
+        $this->componentList[get_class($component)."".rand(1,10)] = $component;
     }
 
     //todo
     public function remove(Component $component)
     {
-        unset($this->componentList[md5($component)]);
+        unset($this->componentList[get_class($component)]);
     }
 
     public function getChildren()
